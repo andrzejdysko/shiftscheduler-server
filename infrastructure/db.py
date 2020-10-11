@@ -2,13 +2,14 @@ import sqlite3
 import click
 from flask import current_app, g, Flask
 from flask.cli import with_appcontext
-from dbpool import get_dbpool
-from sql_connection import SqlConnection
-from .migrations.upgrade import upgrade
+from .dbpool import get_dbpool
+from .sql_connection import SqlConnection
+from .migrations.mysql import upgrade
+from flask import current_app
 
 def get_db(database_name:str):
     if 'db' not in g:
-        g.db = SqlConnection(g.dbpool,database_name)
+        g.db = SqlConnection(current_app.dbpool,database_name)
     return g.db
 
 
@@ -29,7 +30,7 @@ def upgrade_db_command() -> None:
     click.echo('Database upgraded.')
 
 def register_dbpool(app: Flask) -> None:
-    app.dbpool = get_dbpool(app.config)
+    app.dbpool = get_dbpool(app.config["SCHEDULER_CONFIG"])
     app.teardown_appcontext(close_db)
     
 def register_migrations(app: Flask) -> None:

@@ -1,11 +1,11 @@
-SECRET_KEY='dev'
-DATABASES = {
-   PRODUCTION_DATABASE = {
-       DATABASE_TYPE = "sqlite",
-       DATABASE_URI = ('scheduler.sqlite')
-   },
-   ADMIN_DATABASE = {
-       DATABASE_TYPE = "sqlite",
-       DATABASE_URI = ('admin_panel.sqlite')
-   }
-}
+SECRET_KEY="dev"
+SCHEDULER_CONFIG={
+            "PRODUCTION_DATABASE" : {
+                "TYPE": "sqlite",
+                "NAME" : "scheduler"
+            },
+            "ADMIN_DATABASE" : {
+                "TYPE": "sqlite",
+                "NAME" : "admin_panel"
+            }
+        }
